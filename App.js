@@ -10,7 +10,7 @@ const store = createStore(
   decks,
   applyMiddleware(thunk),
 )
-import AppNavigator from './src/navigation/AppNavigator'
+import AppNavigator from './src/routes/AppNavigator'
 
 export default function App(props) {
   return (

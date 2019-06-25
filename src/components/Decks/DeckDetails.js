@@ -1,38 +1,37 @@
 import React from 'react'
 import { View, Text, Alert, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { removeDeck } from '../store/actions/decks';
+import { removeDeck } from '../../store/actions/decks';
 import { connect } from 'react-redux'
 
-const DeckCardView = props => {
+const DeckDetails = props => {
   const showAlert = (id) => {
     Alert.alert(
       'Delete Deck - ' + props.title,
       'Would you like to delete this deck?',
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'Delete', onPress: () => props.deleteDeck(id) },
+        { text: 'Delete', onPress: () => {
+          props.deleteDeck(id)
+          props.navigation.navigate('Home', { id: props.id, deckTitle: props.title })
+        }},
       ],
       { cancelable: false }
     )
   }
   return (
     <View style={styles.container} >
-      <TouchableOpacity
-        // onPress={() => props.navigation.navigate('AddCard', {id: props.id})}
-      >
-        <Text style={styles.title}>
-          {props.title}
+      <Text style={styles.title}>
+        {props.title}
+      </Text>
+      <View style={styles.description}>
+        <Text style={styles.detail}>
+          Cards: {props.description}
         </Text>
-        <View style={styles.description}>
-          <Text style={styles.detail}>
-            Size: {props.description}
-          </Text>
-          <Text style={styles.detail}>
-            Create At: {props.createAt}
-          </Text>
-        </View>
-      </TouchableOpacity>
+        <Text style={styles.detail}>
+          Create At: {props.createAt}
+        </Text>
+      </View>
       <View style={styles.container}>
         <TouchableOpacity
         // onPress={this.onPress}
@@ -44,7 +43,7 @@ const DeckCardView = props => {
       </View>
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate('AddCard', {id: props.id, deckTitle: props.title})}
+          onPress={() => props.navigation.navigate('AddCard', { id: props.id, deckTitle: props.title })}
         >
           <Text style={styles.button}>
             <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'} /> Add Card
@@ -108,4 +107,4 @@ const mapDispatchToProps = dispatch => {
     deleteDeck: id => dispatch(removeDeck(id)),
   }
 }
-export default connect(null, mapDispatchToProps)(DeckCardView)
+export default connect(null, mapDispatchToProps)(DeckDetails)

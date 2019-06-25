@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
 
-import AddCard from '../components/AddCard';
+import AddCard from '../components/Cards/AddCard';
 
 function AddCardsScreen({ navigation }) {
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <AddCard navigation={navigation} />
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

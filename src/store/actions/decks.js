@@ -7,14 +7,14 @@ export const EDIT_DECK = 'EDIT_DECK'
 export const REMOVE_DECK = 'REMOVE_DECK'
 
 // ACTIONS 
-export const addDeck = (deck) => { //id, title
+export const addDeck = (id, title) => { //id, title
   return {
     type: ADD_DECK,
-    deck
-    // title,
-    // id,
-    // cards: [],
-    // createAt: new Date().toLocaleString('en-US', { month: 'short', day: '2-digit' }).replace(' ', '/')
+    // deck
+    title,
+    id,
+    cards: [],
+    createAt: new Date().toLocaleString('en-US', { month: 'short', day: '2-digit' }).replace(' ', '/')
   }
 }
 

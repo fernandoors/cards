@@ -5,13 +5,13 @@ export default function decks(state = [], action) {
     case ADD_DECK:
       return [
         ...state,
-        action.deck
-        // {
-        //   title: action.deck.title,
-        //   id: action.deck.id,
-        //   cards: action.deck.cards,
-        //   createAt: action.deck.createAt,
-        // }
+        // action.deck
+        {
+          title: action.title,
+          id: action.id,
+          cards: action.cards,
+          createAt: action.createAt,
+        }
       ]
     case EDIT_DECK:
       return [

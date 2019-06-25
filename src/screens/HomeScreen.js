@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import DeckCardView from '../components/DeckCardView';
-import { EmptyDeck } from '../components/EmptyDeck';
+import DeckCardView from '../components/Common/DeckCardView';
+import { EmptyDeck } from '../components/Common/EmptyDeck';
 
 function HomeScreen({navigation, decks }) {
   return (

@@ -1,54 +1,55 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { View, Alert, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { addDeck, addCard } from '../store/actions/decks';
+import { addDeck } from '../../store/actions/decks';
+import { generateUID } from '../../../services/utils';
 
 
-class AddCard extends Component {
+class AddDeck extends Component {
   state = {
-    cardQuestion: '',
-    cardAnswer: '',
+    deckTitle: '',
     report: ''
   }
-  handleSaveCard = () => {
-    if (!this.state.cardQuestion) return this.setState({ report: "Please input card question" })
-    if (!this.state.cardAnswer) return this.setState({ report: "Please input card answer" })
-    this.props.saveCard(this.props.navigation.state.params.id ,this.state.cardQuestion, this.state.cardAnswer)
-    this.setState({ cardQuestion: '', cardAnswer: '', report: 'Card added' })
+  handleSaveDeck = () => {
+    const { deckTitle } = this.state
+    const id = generateUID()
+    if (!deckTitle) return this.setState({ report: "Please input deck's title" })
+    this.props.saveDeck(id, deckTitle)
+    this.setState({ deckTitle: '', report: '' }, () => this.props.navigation.navigate('AddCard', { id, deckTitle }))
   }
   alertView = () => {
     return (
       Alert.alert(
-        'Discard Card',
-        'Would like to discard this card?',
+        'Discard Deck',
+        'Would like to discard this deck?',
         [
           {
             text: 'Cancel',
-            onPress: () => { },
+            onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
-          { text: 'OK', onPress: () => this.setState({ cardQuestion: '', cardAnswer: '' }, () => this.props.navigation.navigate('Home')) },
+          { text: 'OK', onPress: () => this.setState({ deckTitle: '', report: '' }, () => this.props.navigation.navigate('HomeStack')) },
         ],
         { cancelable: false },
       )
     )
   }
   render() {
-    const { cardQuestion, cardAnswer } = this.state
+    const { deckTitle } = this.state
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.titleView}>
-            <Text style={styles.title}>Card Question</Text>
+            <Text style={styles.title}>Deck Title</Text>
           </View>
           <View style={styles.inputView}>
-            <TextInput placeholder="Input card question." style={styles.input} value={cardQuestion} onChangeText={cardQuestion => this.setState({ cardQuestion })} />
-          </View>
-          <View style={styles.titleView}>
-            <Text style={styles.title}>Card Answer</Text>
-          </View>
-          <View style={styles.inputView}>
-            <TextInput placeholder="Input card answer." style={styles.input} value={cardAnswer} onChangeText={cardAnswer => this.setState({ cardAnswer })} />
+            <TextInput placeholder="Input deck's title." 
+              style={styles.input} 
+              value={deckTitle} 
+              onChangeText={deckTitle => this.setState({ deckTitle })} 
+              returnKeyType='send'
+              onSubmitEditing={()=>this.handleSaveDeck()}
+              />
           </View>
           <View style={styles.options}>
             <TouchableOpacity style={styles.buttons} onPress={this.alertView}>
@@ -56,7 +57,7 @@ class AddCard extends Component {
                 Cancel
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttons} onPress={() => this.handleSaveCard()}>
+            <TouchableOpacity style={styles.buttons} onPress={() => this.handleSaveDeck()}>
               <Text style={styles.buttonsText}>
                 Done
               </Text>
@@ -78,7 +79,7 @@ class AddCard extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 55,
+    paddingTop: 15,
     backgroundColor: '#fff',
   },
   titleView: {
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.9,
     alignItems: 'stretch',
     justifyContent: 'center',
-    height: 80,
+    height: 40,
     fontSize: 20,
   },
   options: {
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveCard: (id, question, answer) => dispatch(addCard(id, question, answer)),
+    saveDeck: (id, deck) => dispatch(addDeck(id, deck)),
   }
 }
-export default connect(null, mapDispatchToProps)(AddCard)
+export default connect(null, mapDispatchToProps)(AddDeck)
