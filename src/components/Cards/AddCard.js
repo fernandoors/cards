@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { KeyboardAvoidingView, View, Alert, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { addDeck, addCard } from '../../store/actions/decks';
+import { addDeck, addCard, handleSaveCard } from '../../store/actions/decks';
 
 
 class AddCard extends Component {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveCard: (id, question, answer) => dispatch(addCard(id, question, answer)),
+    saveCard: (id, question, answer) => dispatch(handleSaveCard(id, question, answer)),
   }
 }
 export default connect(null, mapDispatchToProps)(AddCard)

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { View, Alert, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { addDeck } from '../../store/actions/decks';
-import { generateUID } from '../../../services/utils';
+import { handleSaveDeck } from '../../store/actions/decks';
+import { generateUID } from '../../services/utils';
 
 
 class AddDeck extends Component {
@@ -10,7 +10,7 @@ class AddDeck extends Component {
     deckTitle: '',
     report: ''
   }
-  handleSaveDeck = () => {
+  handleSaveDeck = async () => {
     const { deckTitle } = this.state
     const id = generateUID()
     if (!deckTitle) return this.setState({ report: "Please input deck's title" })
@@ -25,7 +25,7 @@ class AddDeck extends Component {
         [
           {
             text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
+            onPress: () =>{},
             style: 'cancel',
           },
           { text: 'OK', onPress: () => this.setState({ deckTitle: '', report: '' }, () => this.props.navigation.navigate('HomeStack')) },
@@ -43,13 +43,13 @@ class AddDeck extends Component {
             <Text style={styles.title}>Deck Title</Text>
           </View>
           <View style={styles.inputView}>
-            <TextInput placeholder="Input deck's title." 
-              style={styles.input} 
-              value={deckTitle} 
-              onChangeText={deckTitle => this.setState({ deckTitle })} 
+            <TextInput placeholder="Input deck's title."
+              style={styles.input}
+              value={deckTitle}
+              onChangeText={deckTitle => this.setState({ deckTitle })}
               returnKeyType='send'
-              onSubmitEditing={()=>this.handleSaveDeck()}
-              />
+              onSubmitEditing={() => this.handleSaveDeck()}
+            />
           </View>
           <View style={styles.options}>
             <TouchableOpacity style={styles.buttons} onPress={this.alertView}>
@@ -59,7 +59,7 @@ class AddDeck extends Component {
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttons} onPress={() => this.handleSaveDeck()}>
               <Text style={styles.buttonsText}>
-                Done
+                Create
               </Text>
             </TouchableOpacity>
           </View>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveDeck: (id, deck) => dispatch(addDeck(id, deck)),
+    saveDeck: (id, deck) => dispatch(handleSaveDeck(id, deck)),
   }
 }
 export default connect(null, mapDispatchToProps)(AddDeck)

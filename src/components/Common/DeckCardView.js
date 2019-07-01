@@ -1,26 +1,17 @@
 import React from 'react'
-import { View, Text, Alert, StyleSheet, Platform, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { removeDeck } from '../../store/actions/decks';
+import { handleRemoveDeck } from '../../store/actions/decks';
 import { connect } from 'react-redux'
 
 const DeckCardView = props => {
-  const showAlert = (id) => {
-    Alert.alert(
-      'Delete Deck - ' + props.title,
-      'Would you like to delete this deck?',
-      [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'Delete', onPress: () => props.deleteDeck(id) },
-      ],
-      { cancelable: false }
-    )
-  }
+  const route = (route) => { props.navigation.navigate(route, { id: props.id, deckTitle: props.title }) }
   return (
     <View style={styles.container} >
       <TouchableOpacity
-          onPress={() => props.navigation.navigate('CardDetailScreen', { id: props.id, deckTitle: props.title })}
-          // onPress={() => props.navigation.navigate('AddCard', {id: props.id})}
+        onPress={() => {
+          route('DeckDetailScreen')
+        }}
       >
         <Text style={styles.title}>
           {props.title}
@@ -29,38 +20,33 @@ const DeckCardView = props => {
           <Text style={styles.detail}>
             Cards: {props.description}
           </Text>
-          {/* <Text style={styles.detail}>
-            Create At: {props.createAt}
-          </Text> */}
         </View>
       </TouchableOpacity>
       <View style={styles.container}>
-        <TouchableOpacity
-        // onPress={this.onPress}
-        >
-          <Text style={styles.button}>
-            <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'} /> Start Quiz
-          </Text>
-        </TouchableOpacity>
+          {props.description === 0 ?
+             <TouchableOpacity
+             onPress={() => {
+               route('AddCard')
+             }}
+           >
+             <Text style={styles.button}>
+               <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'} /> Add Question
+           </Text>
+
+           </TouchableOpacity>
+          :
+            <TouchableOpacity
+              onPress={() => {
+                route('Quiz')
+              }}
+            >
+              <Text style={styles.button}>
+                <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'} /> Start Quiz
+            </Text>
+
+            </TouchableOpacity>
+          }
       </View>
-      {/* <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate('AddCard', {id: props.id, deckTitle: props.title})}
-        >
-          <Text style={styles.button}>
-            <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'} /> Add Card
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-      {/* <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => showAlert(props.id)}
-        >
-          <Text style={styles.button}>
-            <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'} /> Delete Card
-          </Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   )
 }
@@ -70,7 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 4,
     borderWidth: 0.9,
-    borderColor: '#efefef',
+    borderColor: '#ececec',
     backgroundColor: '#fff',
     alignItems: 'stretch',
     justifyContent: 'center',
@@ -106,7 +92,7 @@ const styles = StyleSheet.create({
 });
 const mapDispatchToProps = dispatch => {
   return {
-    deleteDeck: id => dispatch(removeDeck(id)),
+    deleteDeck: id => dispatch(handleRemoveDeck(id)),
   }
 }
 export default connect(null, mapDispatchToProps)(DeckCardView)

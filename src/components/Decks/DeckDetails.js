@@ -1,20 +1,24 @@
 import React from 'react'
 import { View, Text, Alert, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { removeDeck } from '../../store/actions/decks';
+import { handleRemoveDeck } from '../../store/actions/decks';
 import { connect } from 'react-redux'
 
 const DeckDetails = props => {
+  const route = (route) => { props.navigation.navigate(route, { id: props.id, deckTitle: props.title }) }
+
   const showAlert = (id) => {
     Alert.alert(
       'Delete Deck - ' + props.title,
       'Would you like to delete this deck?',
       [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'Delete', onPress: () => {
-          props.deleteDeck(id)
-          props.navigation.navigate('Home', { id: props.id, deckTitle: props.title })
-        }},
+        { text: 'Cancel', onPress: () =>{} },
+        {
+          text: 'Delete', onPress: () => {
+            props.deleteDeck(id)
+            props.navigation.navigate('Home', { id: props.id, deckTitle: props.title })
+          }
+        },
       ],
       { cancelable: false }
     )
@@ -34,7 +38,7 @@ const DeckDetails = props => {
       </View>
       <View style={styles.container}>
         <TouchableOpacity
-        // onPress={this.onPress}
+          onPress={() => route('Quiz')}
         >
           <Text style={styles.button}>
             <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'} /> Start Quiz
@@ -46,7 +50,7 @@ const DeckDetails = props => {
           onPress={() => props.navigation.navigate('AddCard', { id: props.id, deckTitle: props.title })}
         >
           <Text style={styles.button}>
-            <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'} /> Add Card
+            <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'} /> Create New Question
           </Text>
         </TouchableOpacity>
       </View>
@@ -59,6 +63,17 @@ const DeckDetails = props => {
           </Text>
         </TouchableOpacity>
       </View>
+      {props.results.length > 0 &&
+        props.results.map((res, key) => (
+          <View style={styles.resultView} key={key}>
+            <View style={styles.center}>
+              <Text style={styles.resultTitle}>Results</Text>
+              <Text style={styles.resultDesc}>Date: {res.createAt}</Text>
+              <Text style={styles.resultDesc}>Result: {res.result}</Text>
+            </View>
+          </View>
+        ))
+      }
     </View>
   )
 }
@@ -100,11 +115,37 @@ const styles = StyleSheet.create({
   },
   cancel: {
     color: 'red'
-  }
+  },
+  resultView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderWidth: 0.9,
+    borderColor: '#ececec',
+    backgroundColor: '#fff',
+    alignItems: 'stretch',
+    marginTop: 5,
+    marginBottom: 10,
+    padding: 5
+  },
+  resultTitle: {
+    color: 'black',
+    fontSize: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  resultDesc: {
+    fontSize: 18,
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 const mapDispatchToProps = dispatch => {
   return {
-    deleteDeck: id => dispatch(removeDeck(id)),
+    deleteDeck: id => dispatch(handleRemoveDeck(id)),
   }
 }
 export default connect(null, mapDispatchToProps)(DeckDetails)

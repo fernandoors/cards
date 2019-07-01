@@ -1,32 +1,23 @@
-import { ADD_DECK, EDIT_DECK, REMOVE_DECK, ADD_CARD } from '../actions/decks'
-
+import { ADD_DECK, REMOVE_DECK, ADD_CARD, ADD_RESULT } from '../actions/decks'
+let newCard = ''
+let newDeck = ''
 export default function decks(state = [], action) {
   switch (action.type) {
     case ADD_DECK:
-      return [
-        ...state,
-        // action.deck
-        {
-          title: action.title,
-          id: action.id,
-          cards: action.cards,
-          createAt: action.createAt,
-        }
-      ]
-    case EDIT_DECK:
-      return [
-        ...state,
-        action.deck
-      ]
+      newDeck = Object.values(JSON.parse(action.deck))
+      return newDeck
     case ADD_CARD:
-      const {cardId, question, answer} = action
-      const newCard = state.map(deck => {
- 
-        if(deck.id === action.id){
-          deck.cards = [...deck.cards, {id: cardId, question, answer}]
+      newDeck = Object.values(JSON.parse(action.deck))
+      return newDeck
+    case ADD_RESULT:
+      const { createAt, result } = action
+      newCard = state.map(deck => {
+
+        if (deck.id === action.id) {
+          deck.results = [...deck.results, { createAt, result }]
           return deck
         }
-        return 
+        return
       })
       return newCard
     case REMOVE_DECK:

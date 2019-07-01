@@ -2,7 +2,7 @@ import React from 'react';
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import AddDeck from '../components/Decks/AddDeck';
 
-export default function DeckCardScreen({navigation}) {
+export default function AddDeckScreen({navigation}) {
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <AddDeck navigation={navigation}/>
@@ -10,7 +10,7 @@ export default function DeckCardScreen({navigation}) {
   );
 }
 
-DeckCardScreen.navigationOptions = {
+AddDeckScreen.navigationOptions = {
   title: 'Add Deck',
 };
 

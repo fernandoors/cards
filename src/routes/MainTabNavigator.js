@@ -7,31 +7,31 @@ import {
 
 import TabBarIcon from '../components/Common/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import AddDeckCardScreen from '../screens/AddDeckCardScreen';
+import AddDeckScreen from '../screens/AddDeckScreen';
 import AddCardsScreen from '../screens/AddCardsScreen';
-import CardDetailScreen from '../screens/CardDetailScreen';
+import DeckDetailScreen from '../screens/DeckDetailScreen';
+import PushScreen from '../screens/PushSettingsScreen';
 import QuizScreen from '../screens/QuizScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   AddCard: AddCardsScreen,
-  CardDetailScreen
+  DeckDetailScreen,
+  Quiz: QuizScreen
 });
 
-const QuizStack = createStackNavigator({
-  Quiz: QuizScreen,
+const PushSettingsStack = createStackNavigator({
+  PushSettings: PushScreen,
 });
 
-const AddDeckCard = createStackNavigator({
-  AddDeckCard: AddDeckCardScreen,
+const AddDeck = createStackNavigator({
+  AddDeck: AddDeckScreen,
   AddCard: AddCardsScreen,
-});
+}, {
+    initialRouteName: 'AddDeck',
+  });
 
-// export const AddCardStack = createStackNavigator({
-//   AddCard: AddCardsScreen,
-// });
-
-AddDeckCard.navigationOptions = {
+AddDeck.navigationOptions = {
   tabBarLabel: 'Add Deck',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -51,21 +51,21 @@ HomeStack.navigationOptions = {
   ),
 };
 
-QuizStack.navigationOptions = {
-  tabBarLabel: 'Start All Quizzes',
+PushSettingsStack.navigationOptions = {
+  tabBarLabel: 'Push Settings',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-arrow-dropright' : 'md-arrow-dropright'}
+      name={Platform.OS === 'ios' ? 'ios-send' : 'md-send'}
     />
   ),
 };
 
 export default createBottomTabNavigator({
-  AddDeckCard,
+  AddDeck,
   HomeStack,
-  QuizStack,
+  PushSettingsStack,
 },
-{
-  initialRouteName: 'HomeStack',
-});
+  {
+    initialRouteName: 'HomeStack',
+  });

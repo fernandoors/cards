@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View, Text } from 'react-native';
 
 import DeckDetails from '../components/Decks/DeckDetails';
 
-function CardDetailScreen({ navigation, decks }) {
+function DeckDetailScreen({ navigation, decks }) {
   return (
     <View style={styles.container}>
       <ScrollView
@@ -16,6 +16,7 @@ function CardDetailScreen({ navigation, decks }) {
             title={deck.title}
             description={deck.cards.length}
             createAt={deck.createAt}
+            results={deck.results}
             key={deck.id}
             id={deck.id}
             navigation={navigation}
@@ -26,7 +27,7 @@ function CardDetailScreen({ navigation, decks }) {
   );
 }
 
-CardDetailScreen.navigationOptions = (props) => ({
+DeckDetailScreen.navigationOptions = (props) => ({
   title: `Deck - ${props.navigation.state.params.deckTitle}`,
 });
 
@@ -42,4 +43,4 @@ const mapStateToProps = (state) => {
     decks: state
   }
 }
-export default connect(mapStateToProps)(CardDetailScreen) 
+export default connect(mapStateToProps)(DeckDetailScreen) 

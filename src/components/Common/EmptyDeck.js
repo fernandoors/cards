@@ -7,7 +7,7 @@ export const EmptyDeck = props => {
     <View style={styles.container}>
       <View style={styles.empty}>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate('AddDeckCard')}
+          onPress={() => props.navigation.navigate('AddDeck')}
         >
           <Text style={styles.emptyText}>
             Add Deck
