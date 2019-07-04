@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     margin: 15,
-    color: `#007AFF`,
+    color: '#007AFF',
   },
   description: {
     flexDirection: 'row',
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   detail: {
     margin: 13,
-    color: `#007AFF`,
+    color: '#007AFF',
     fontSize: 14,
     justifyContent: 'space-between',
   },
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   resultView: {
     flex: 1,
-    width: `90%`,
+    width: '90%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   resultDesc: {
     fontSize: 18,
     alignItems: 'center',
-    textAlign: `center`,
+    textAlign: 'center',
   },
   center: {
     justifyContent: 'center',

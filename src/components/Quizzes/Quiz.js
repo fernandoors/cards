@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { handleSaveResult } from '../../store/actions/decks';
 import { connect } from 'react-redux'
 import { clearLocalNotification } from '../../services/utils';
 
-class Quiz extends Component {
+class Quiz extends PureComponent {
   state = {
     showAnswer: false,
     showCard: 0,
@@ -38,12 +38,12 @@ class Quiz extends Component {
     const { showAnswer, showCard } = this.state
     return (
       <View style={styles.container}>
-        {this.props.deck.filter(card=> card.id === this.props.id).map(({ cards }, index) =>
+        {this.props.deck.filter(card => card.id === this.props.id).map(({ cards }, index) =>
           <View key={index}>
             {showCard < cards.length &&
               <View>
                 <View style={styles.cardView}>
-                  <Text style={styles.cardTitle}>Question {`${showCard+1}/${cards.length}`} </Text>
+                  <Text style={styles.cardTitle}>Question {`${showCard + 1}/${cards.length}`} </Text>
                   <Text style={styles.cardText}>{cards[showCard].question}</Text>
                 </View>
                 {showAnswer &&
@@ -54,7 +54,7 @@ class Quiz extends Component {
                 }
                 {!showAnswer ?
                   <TouchableOpacity
-                    style={[styles.buttons, { width: `80%`, alignSelf: `center` }]}
+                    style={[styles.buttons, { width: '80%', alignSelf: 'center' }]}
                     onPress={() => this.setState({ showAnswer: true })}
                   >
                     <Text style={styles.buttonsText}>
@@ -66,13 +66,13 @@ class Quiz extends Component {
                       style={styles.buttons}
                       onPress={() => this.handleNextCard(false)}
                     >
-                      <Text style={[styles.buttonsText, { color: `red` }]}>
+                      <Text style={[styles.buttonsText, { color: 'red' }]}>
                         Incorrect
                   </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.buttons}
-                      onPress={() => this.handleNextCard()}
+                      onPress={this.handleNextCard}
                     >
                       <Text style={styles.buttonsText}>
                         Correct
@@ -87,7 +87,7 @@ class Quiz extends Component {
                 <Text style={styles.cardTitle}>Great, you finished this quiz!</Text>
                 <Text style={styles.cardText}>Touch in Finish below to see your result</Text>
                 <TouchableOpacity
-                  style={[styles.buttons, { width: `80%`, alignSelf: `center`, marginTop: 20 }]}
+                  style={[styles.buttons, { width: '80%', alignSelf: 'center', marginTop: 20 }]}
                   onPress={this.handleResult}
                 >
                   <Text style={styles.buttonsText}>
@@ -104,7 +104,7 @@ class Quiz extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: `center`,
+    justifyContent: 'center',
   },
   cardView: {
     borderRadius: 4,
@@ -121,13 +121,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 24,
     fontWeight: 'bold',
-    color: `black`,
+    color: 'black',
   },
   cardText: {
     alignSelf: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    color: `#007AFF`,
+    color: '#007AFF',
   },
   options: {
     flexDirection: 'row',

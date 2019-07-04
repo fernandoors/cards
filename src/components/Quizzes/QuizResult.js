@@ -14,7 +14,7 @@ export default function QuizResult({ navigation }) {
       <View style={styles.options}>
         <TouchableOpacity
           style={styles.buttons}
-          onPress={() => route(`DeckDetailScreen`)}
+          onPress={() => route('DeckDetailScreen')}
         >
           <Text style={styles.buttonsText}>
             Go back to Deck
@@ -22,7 +22,7 @@ export default function QuizResult({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttons}
-          onPress={() => route(`Quiz`)}
+          onPress={() => route('Quiz')}
         >
           <Text style={styles.buttonsText}>
             Restart Quiz
@@ -36,7 +36,7 @@ export default function QuizResult({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: `center`,
+    justifyContent: 'center',
   },
   cardView: {
     borderRadius: 4,
@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 24,
     fontWeight: 'bold',
-    color: `black`,
+    color: 'black',
   },
   cardText: {
     alignSelf: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    color: `#007AFF`,
+    color: '#007AFF',
   },
   options: {
     flexDirection: 'row',

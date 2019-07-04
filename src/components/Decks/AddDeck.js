@@ -48,7 +48,7 @@ class AddDeck extends Component {
               value={deckTitle}
               onChangeText={deckTitle => this.setState({ deckTitle })}
               returnKeyType='send'
-              onSubmitEditing={() => this.handleSaveDeck()}
+              onSubmitEditing={this.handleSaveDeck}
             />
           </View>
           <View style={styles.options}>

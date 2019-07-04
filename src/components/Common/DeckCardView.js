@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     margin: 15,
-    color: `#007AFF`,
+    color: '#007AFF',
   },
   description: {
     flexDirection: 'row',
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   detail: {
     margin: 13,
-    color: `#007AFF`,
+    color: '#007AFF',
     fontSize: 14,
     justifyContent: 'space-between',
   },

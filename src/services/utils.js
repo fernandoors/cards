@@ -15,19 +15,17 @@ export function clearLocalNotification() {
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
-function createNotification() {
-  return {
-    title: 'GO TO QUIZZES',
-    body: "Don't forget to do your quizzes for today!",
-    ios: {
-      sound: true,
-    },
-    android: {
-      sound: true,
-      priority: 'high',
-      sticky: false,
-      vibrate: true,
-    }
+const createNotification = {
+  title: 'GO TO QUIZZES',
+  body: "Don't forget to do your quizzes for today!",
+  ios: {
+    sound: true,
+  },
+  android: {
+    sound: true,
+    priority: 'high',
+    sticky: false,
+    vibrate: true,
   }
 }
 
