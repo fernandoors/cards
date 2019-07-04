@@ -12,12 +12,14 @@ import AddCardsScreen from '../screens/AddCardsScreen';
 import DeckDetailScreen from '../screens/DeckDetailScreen';
 import PushScreen from '../screens/PushSettingsScreen';
 import QuizScreen from '../screens/QuizScreen';
+import ResultScreen from '../screens/ResultScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   AddCard: AddCardsScreen,
   DeckDetailScreen,
-  Quiz: QuizScreen
+  Quiz: QuizScreen,
+  Result: ResultScreen
 });
 
 const PushSettingsStack = createStackNavigator({
@@ -61,11 +63,14 @@ PushSettingsStack.navigationOptions = {
   ),
 };
 
-export default createBottomTabNavigator({
-  AddDeck,
-  HomeStack,
-  PushSettingsStack,
-},
+export default createBottomTabNavigator(
+  {
+    AddDeck,
+    HomeStack,
+    PushSettingsStack,
+  },
   {
     initialRouteName: 'HomeStack',
-  });
+    resetOnBlur: true
+  }
+);

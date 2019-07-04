@@ -1,5 +1,5 @@
 import { generateUID } from "../../services/utils";
-import { saveDeck, getAllDecks, removeDeck, saveCard } from "../../services/api";
+import { saveDeck, getAllDecks, removeDeck, saveCard, saveResult } from "../../services/api";
 
 export const ADD_DECK = 'ADD_DECK'
 export const EDIT_DECK = 'EDIT_DECK'
@@ -29,12 +29,10 @@ export const addCard = (deck) => {
     deck
   }
 }
-export const addQuizResult = (id, result) => {
+export const addQuizResult = (deck) => {
   return {
     type: ADD_RESULT,
-    id,
-    createAt,
-    result
+    deck
   }
 }
 
@@ -55,10 +53,13 @@ export const handleSaveDeck = (id, title) => {
 }
 export const handleSaveCard = (deckId, question, answer) => {
   return dispatch => {
-    saveCard(deckId, question, answer).then(getAllDecks().then(
-      (deck =>  dispatch(addCard(deck))) 
-    ))
-      // .then(deck =>  console.log(`action`,deck))//dispatch(addCard(deck))) 
+    saveCard(deckId, question, answer).then(deck => dispatch(addCard(deck)))
+      .catch(error => console.error(error))
+  }
+}
+export const handleSaveResult = (deckId, result, total) => {
+  return dispatch => {
+    saveResult(deckId, result, total).then(deck => dispatch(addQuizResult(deck)))
       .catch(error => console.error(error))
   }
 }

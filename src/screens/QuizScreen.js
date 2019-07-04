@@ -23,14 +23,11 @@ const alertView = (navigation) => {
 function QuizScreen({ navigation, decks }) {
   return (
     <View style={{ flex: 1 }}>
-      {decks.filter(deck => deck.id === navigation.state.params.id).map((deck, index) =>
-        <Quiz
-          deck={deck}
-          key={index}
-          index={index}
-          navigation={navigation}
-        />
-      )}
+      <Quiz
+        deck={decks}
+        id={navigation.state.params.id}
+        navigation={navigation}
+      />
     </View>
   )
 }
@@ -40,7 +37,7 @@ QuizScreen.navigationOptions = (props) => ({
   headerRight: (
     <Button
       onPress={() => alertView(props.navigation)}
-      title="Finish"
+      title="Quit"
       color="#007AFF"
     />
   )

@@ -12,7 +12,7 @@ const DeckDetails = props => {
       'Delete Deck - ' + props.title,
       'Would you like to delete this deck?',
       [
-        { text: 'Cancel', onPress: () =>{} },
+        { text: 'Cancel', onPress: () => { } },
         {
           text: 'Delete', onPress: () => {
             props.deleteDeck(id)
@@ -38,9 +38,10 @@ const DeckDetails = props => {
       </View>
       <View style={styles.container}>
         <TouchableOpacity
+          disabled={props.description === 0}
           onPress={() => route('Quiz')}
         >
-          <Text style={styles.button}>
+          <Text style={[styles.button, props.description === 0 ? { color: 'gray' } : {}]}>
             <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'} /> Start Quiz
           </Text>
         </TouchableOpacity>
@@ -64,15 +65,15 @@ const DeckDetails = props => {
         </TouchableOpacity>
       </View>
       {props.results.length > 0 &&
-        props.results.map((res, key) => (
-          <View style={styles.resultView} key={key}>
-            <View style={styles.center}>
-              <Text style={styles.resultTitle}>Results</Text>
+        <View style={styles.center}>
+          <Text style={styles.resultTitle}>Lasts results</Text>
+          {props.results.map((res, key) => res.total > 0 &&
+            <View style={styles.resultView} key={key}>
               <Text style={styles.resultDesc}>Date: {res.createAt}</Text>
-              <Text style={styles.resultDesc}>Result: {res.result}</Text>
+              <Text style={styles.resultDesc}>Result: {res.result > 0 ? res.result : 0} | {(res.result * 100 / res.total).toFixed(0)}% </Text>
             </View>
-          </View>
-        ))
+          )}
+        </View>
       }
     </View>
   )
@@ -118,6 +119,7 @@ const styles = StyleSheet.create({
   },
   resultView: {
     flex: 1,
+    width: `90%`,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
@@ -134,9 +136,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 20,
   },
   resultDesc: {
     fontSize: 18,
+    alignItems: 'center',
+    textAlign: `center`,
   },
   center: {
     justifyContent: 'center',

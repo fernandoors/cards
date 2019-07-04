@@ -8,6 +8,8 @@ export function generateUID() {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
+export const setTime = () => new Date().toLocaleString('en-US', { month: 'short', day: '2-digit' }).replace(' ', '/')
+
 export function clearLocalNotification() {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
@@ -62,9 +64,9 @@ export function setLocalNotification(days = 1, hours = 20, minutes = 0, repeat =
 
 export async function getLocalNotification() {
   return await AsyncStorage.getItem(SET_PUSH_SETTINGS).then(JSON.parse).then(data => {
-    if(data === null){
+    if (data === null) {
       saveLocalNotification('1', '20', '0', 'day').then(getLocalNotification())
-    }else{
+    } else {
       return data
     }
   })

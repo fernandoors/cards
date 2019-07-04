@@ -10,16 +10,8 @@ export default function decks(state = [], action) {
       newDeck = Object.values(JSON.parse(action.deck))
       return newDeck
     case ADD_RESULT:
-      const { createAt, result } = action
-      newCard = state.map(deck => {
-
-        if (deck.id === action.id) {
-          deck.results = [...deck.results, { createAt, result }]
-          return deck
-        }
-        return
-      })
-      return newCard
+      newDeck = Object.values(JSON.parse(action.deck))
+      return newDeck
     case REMOVE_DECK:
       return state.filter(deck =>
         deck.id !== action.id
